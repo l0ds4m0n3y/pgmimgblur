@@ -1,18 +1,21 @@
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.*;
 
 public class Menu extends JFrame implements ActionListener {
-    private final int WIDTH =500;
-    private final int LENGTH = 500;
+    private final int WIDTH = 400;
+    private final int LENGTH = 200;
+    private final int BUTTON_LENGHT = 100;
+    private final int BUTTON_HEIGHT = 50;
+    private final int CUSHION = 5;
     private JLabel iterantionsLabel = new JLabel("how many iterations?");
     private JLabel fileChosenName = new JLabel("");
     private JTextField iterationsField = new JTextField();
-    private JButton uploadButton = new JButton("censor that mf");
+    private JButton uploadButton = new JButton("blur");
     private JButton fileChooserButton = new JButton("upload file");
-    private static int numOfIterations;
+    private static int numOfIterations = 0;
     private static File fileToBlur;
 
     @Override
@@ -28,16 +31,12 @@ public class Menu extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == uploadButton) {
             try {
-                numOfIterations = Integer.valueOf(iterationsField.getText());
+                numOfIterations = Integer.parseInt(iterationsField.getText());
                 if(numOfIterations > 0){
                     pictureBlurrer.runProgram();
                 }
-                if(!fileToBlur.getName().contains(".pgm")){
-                    System.out.println("boo womp");
-                }
             } catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, "Something went wrong","error", JOptionPane.ERROR_MESSAGE);
-
             }
             
         }
@@ -46,13 +45,20 @@ public class Menu extends JFrame implements ActionListener {
     Menu() {
         setLayout(null);
 
-        uploadButton.addActionListener(this);
-        uploadButton.setBounds(100, 0, 100, 100);
         fileChooserButton.addActionListener(this);
-        fileChooserButton.setBounds(0, 0, 100, 100);
-        fileChosenName.setBounds(0, 100, WIDTH, 100);
-        iterantionsLabel.setBounds(0, 200, 100, 100);
-        iterationsField.setBounds(100, 200, 100, 100);
+        fileChooserButton.setBounds(WIDTH / 2 - BUTTON_LENGHT / 2, CUSHION, BUTTON_LENGHT, BUTTON_HEIGHT);
+        fileChooserButton.setFont(new Font("consolas", Font.BOLD, 10));
+
+        fileChosenName.setBounds(CUSHION, BUTTON_LENGHT - 25, WIDTH - CUSHION * 2, 15);
+        fileChosenName.setHorizontalAlignment(SwingConstants.CENTER);
+
+        iterantionsLabel.setBounds(CUSHION, 100, WIDTH / 2 - 25, 15);
+
+        iterationsField.setBounds(WIDTH / 2 - 30, 100, 50, 15);
+
+        uploadButton.addActionListener(this);
+        uploadButton.setBounds(WIDTH / 2 - BUTTON_LENGHT / 2, LENGTH - BUTTON_HEIGHT - CUSHION, BUTTON_LENGHT, BUTTON_HEIGHT);
+
         setPreferredSize(new Dimension(WIDTH, LENGTH));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
