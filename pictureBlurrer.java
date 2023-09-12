@@ -44,7 +44,6 @@ public class pictureBlurrer{
         for (int i = 0; i < numColumns; i++) {
             for (int j = 0; j < numRows; j++) {
                 imageArray[i][j] = fileScanner.nextInt();
-                ;
             }
         }
         //new Frame(numRows, numColumns, imageArray);
@@ -62,17 +61,16 @@ public class pictureBlurrer{
         fileScanner.close();
     }
 
-
     /*
      * 
      * The method I use to sum the values around the pixel at (row, col) requires pixels to be present around it, but
      * it does not work around the edges as the scanner would go out of bounds so by implementing a try catch method
-     * it lets me sum the remaning pixels around the pixel at (row, col). One problem this arises is that an undesired
+     * it lets me sum the remaining pixels around the pixel at (row, col). One problem this arises is that an undesired
      * black border would form around the image, to combat this I predetermined the amount of pixels counted to 9 and
-     * by utlizing the same try catch whenever a pixel would be skipped for being out bounds the number of pixels 
+     * by utilizing the same try catch whenever a pixel would be skipped for being out bounds the number of pixels
      * accounted for in the average would lower by 1 for a more accurate average.
      * 
-     * The rest is straigforward with a for loop inside another for loop to sum the pixels starting at the top left corner
+     * The rest is straightforward with a for loop inside another for loop to sum the pixels starting at the top left corner
      * 
      * 
      * This method returns two numbers in a form of an array, first number is the actual sum and the second is the
