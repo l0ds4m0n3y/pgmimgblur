@@ -9,15 +9,19 @@ import javax.swing.JPanel;
 public class Frame extends JFrame {
     private double[][] pixelArray;
     final int PIXEL_SIZE = 1;
+    int width;
+    int lenght;
 
-    Frame(int width, int length, double[][] pixelArray) {
+    Frame(double[][] pixelArray) {
         this.pixelArray = pixelArray;
-        Panel panel = new Panel(width, length, pixelArray);
+        width = pixelArray[0].length;
+        lenght = pixelArray.length;
+        Panel panel = new Panel(width, lenght, pixelArray);
         setName(Double.toString(pixelArray[0][0]));
         add(panel);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(width, length);
+        setSize(width, lenght);
         setLocationRelativeTo(null);
     }
 
@@ -29,10 +33,10 @@ public class Frame extends JFrame {
 
         public void paint(Graphics g) {
             Graphics2D g2d = (Graphics2D) g;
-            for (int i = 0; i < pixelArray.length; i++) {
-                for (int j = 0; j < pixelArray[0].length; j++) {
-                    g2d.setPaint(new Color((int) pixelArray[j][i], (int) pixelArray[j][i], (int) pixelArray[j][i]));
-                    g2d.drawRect(i, j, PIXEL_SIZE, PIXEL_SIZE);
+            for (int i = 0; i < lenght; i++) {
+                for (int j = 0; j < width; j++) {
+                    g2d.setPaint(new Color((int) pixelArray[i][j], (int) pixelArray[i][j], (int) pixelArray[i][j]));
+                    g2d.drawRect(j, i, PIXEL_SIZE, PIXEL_SIZE);
                 }
             }
         }
@@ -40,5 +44,4 @@ public class Frame extends JFrame {
     public static void main(String[] args) {
         new Menu();
     }
-
 }
