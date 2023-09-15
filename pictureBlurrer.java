@@ -21,8 +21,8 @@ public class pictureBlurrer{
     private static void writeImage(double[][] img, String imgInfo, String fName) throws IOException {
         FileWriter writer = new FileWriter(fName + ".pgm");
         writer.write(imgInfo);
-        for (int i = 0; i < img.length; i++) {
-            for (int j = 0; j < img[0].length; j++) {
+        for (int i = 0; i < numColumns; i++) {
+            for (int j = 0; j < numRows; j++) {
                 writer.write((int) img[i][j] + " ");
 
             }
