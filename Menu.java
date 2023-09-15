@@ -8,8 +8,9 @@ public class Menu extends JFrame implements ActionListener {
     private final int WIDTH = 400;
     private final int LENGTH = 200;
     private final int BUTTON_LENGHT = 100;
-    private final int BUTTON_HEIGHT = 50;
+    private final int BUTTON_HEIGHT = 25;
     private final int CUSHION = 5;
+    private final int ITERATIONS_HEIGHT = 100;
     private JLabel iterantionsLabel = new JLabel("how many iterations?");
     private JLabel fileChosenName = new JLabel("");
     private JTextField iterationsField = new JTextField();
@@ -32,9 +33,7 @@ public class Menu extends JFrame implements ActionListener {
         } else if (e.getSource() == uploadButton) {
             try {
                 numOfIterations = Integer.parseInt(iterationsField.getText());
-                if(numOfIterations > 0){
-                    pictureBlurrer.runProgram();
-                }
+                pictureBlurrer.runProgram();
             } catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, "Something went wrong","error", JOptionPane.ERROR_MESSAGE);
             }
@@ -52,12 +51,12 @@ public class Menu extends JFrame implements ActionListener {
         fileChosenName.setBounds(CUSHION, BUTTON_LENGHT - 25, WIDTH - CUSHION * 2, 15);
         fileChosenName.setHorizontalAlignment(SwingConstants.CENTER);
 
-        iterantionsLabel.setBounds(CUSHION, 100, WIDTH / 2 - 25, 15);
+        iterantionsLabel.setBounds(CUSHION, ITERATIONS_HEIGHT, WIDTH / 2 - 25, 15);
 
-        iterationsField.setBounds(WIDTH / 2 - 30, 100, 50, 15);
+        iterationsField.setBounds(WIDTH / 2 - 30, ITERATIONS_HEIGHT, 50, 15);
 
         uploadButton.addActionListener(this);
-        uploadButton.setBounds(WIDTH / 2 - BUTTON_LENGHT / 2, LENGTH - BUTTON_HEIGHT - CUSHION, BUTTON_LENGHT, BUTTON_HEIGHT);
+        uploadButton.setBounds(WIDTH / 2 - BUTTON_LENGHT / 2, LENGTH - 75, BUTTON_LENGHT, BUTTON_HEIGHT);
 
         setPreferredSize(new Dimension(WIDTH, LENGTH));
 
