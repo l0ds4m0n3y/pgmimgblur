@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -45,41 +46,42 @@ public class pictureBlurrer{
         }
     }
 
-    /**
-     * main method that runs the blur method by reading a pgm file data into memory via 2D array and writes a new pgm file 
-     * indicating how many iterations of the blur method were passed through 
-     * @throws IOException
-     */
-    public static void runProgram() throws IOException {
-        File file = Menu.getFileFromMenu();
+    public static double[][] pgmToArray(File file) throws FileNotFoundException{
         Scanner fileScanner = new Scanner(file);
         magicNumber = fileScanner.nextLine();
         numColumns = fileScanner.nextInt();
         numRows = fileScanner.nextInt();
         maxValue = fileScanner.nextInt();
         double[][] imageArray = new double[numColumns][numRows];
-        double[][] blurredArray = new double[numColumns][numRows];
-        int iterations = Menu.getNumOfIterations();
 
         for (int i = 0; i < numColumns; i++) {
             for (int j = 0; j < numRows; j++) {
                 imageArray[i][j] = fileScanner.nextInt();
             }
         }
+        fileScanner.close();
+        return imageArray;
+    }
+
+    /**
+     * main method that runs the blur method by reading a pgm file data into memory via 2D array and writes a new pgm file 
+     * indicating how many iterations of the blur method were passed through 
+     * @throws IOException
+     */
+    public static void runProgram(int iterations) throws IOException {
+        File file = Menu.getFileFromMenu();
+        double[][] blurredArray = new double[numColumns][numRows];
+        double[][] imageArray = pgmToArray(file);
 
         //new Frame(imageArray);
         blurredArray = imageArray;
 
-
-        //blur(imageArray, blurredArray);
         for (int i = 0; i < iterations; i++) {
             blur(blurredArray, blurredArray);
         }
         
         writeImage(blurredArray, imgInfoToString(), getFileName(file, iterations)); //TODO uncomment this
         new Frame(blurredArray);
-
-        fileScanner.close();
     }
 
     /** 
@@ -96,6 +98,14 @@ public class pictureBlurrer{
      */
     private static String imgInfoToString(){
         return magicNumber + "\n" + numColumns + " " + numRows + "\n" + maxValue + "\n";     
+    }
+
+    public static int getNumColumns() {
+        return numColumns;
+    }
+     
+    public static int getNumRows() {
+        return numRows;
     }
 
     
@@ -122,14 +132,14 @@ public class pictureBlurrer{
      * forming. Use constants pictureBlurrer.SUM_TOTAL and pictureBlurrer.TOTAL_NUMBERS_SUMMED for easy distinguishment
      */
     
-    private static double[] sum3x3(double[][] img, int row, int col) {
+    private static double[] sum3x3(double[][] img, int col, int row) {
         double[] values = { 0, 0 };
         double value = 0;
         double numOfnumbersSummed = 9;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 try {
-                    value += img[row - 1 + i][col - 1 + j];
+                    value += img[col - 1 + i][row - 1 + j];
                 } catch (Exception e) {
                     numOfnumbersSummed--;
                 }

@@ -27,13 +27,12 @@ public class Menu extends JFrame implements ActionListener {
             int response = fileChooser.showOpenDialog(null);
             if (response == JFileChooser.APPROVE_OPTION) {
                 fileToBlur = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                System.out.println(fileToBlur);
                 fileChosenName.setText(fileToBlur.getAbsolutePath());
             }
         } else if (e.getSource() == uploadButton) {
             try {
                 numOfIterations = Integer.parseInt(iterationsField.getText());
-                pictureBlurrer.runProgram();
+                pictureBlurrer.runProgram(numOfIterations);
             } catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, "Something went wrong","error", JOptionPane.ERROR_MESSAGE);
             }

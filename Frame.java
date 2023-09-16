@@ -14,9 +14,8 @@ public class Frame extends JFrame {
 
     Frame(double[][] pixelArray) {
         this.pixelArray = pixelArray;
-        this.panelWidth = pixelArray[0].length;
-        this.lenght = pixelArray.length;
-        //setSize(panelWidth, lenght);
+        this.panelWidth = pictureBlurrer.getNumRows();
+        this.lenght = pictureBlurrer.getNumColumns();
         Panel panel = new Panel(panelWidth, lenght, pixelArray);
         setName(Double.toString(pixelArray[0][0]));
         add(panel);
