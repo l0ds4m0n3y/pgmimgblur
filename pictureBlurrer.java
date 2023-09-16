@@ -24,8 +24,7 @@ public class pictureBlurrer{
         writer.write(imgInfo);
         for (int i = 0; i < numColumns; i++) {
             for (int j = 0; j < numRows; j++) {
-                writer.write((int) img[i][j] + " ");
-
+                writer.write((int) Math.ceil(img[i][j]) + " ");
             }
             writer.write("\n");
         }
