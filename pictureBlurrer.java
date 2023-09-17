@@ -22,8 +22,8 @@ public class pictureBlurrer{
     private static void writeImage(double[][] img, String imgInfo, String fName) throws IOException {
         FileWriter writer = new FileWriter(fName + ".pgm");
         writer.write(imgInfo);
-        for (int i = 0; i < numColumns; i++) {
-            for (int j = 0; j < numRows; j++) {
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numColumns; j++) {
                 writer.write((int) Math.ceil(img[i][j]) + " ");
             }
             writer.write("\n");
@@ -37,8 +37,8 @@ public class pictureBlurrer{
      * @param dest  the 2D array of where the output of the method will be entered
      */
     private static void blur(double[][] source, double[][] dest) {
-        for (int i = 0; i < numColumns; i++) {
-            for (int j = 0; j < numRows; j++) {
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numColumns; j++) {
                 double[] values = sum3x3(source, i, j);
                 dest[i][j] = values[SUM_TOTAL] / values[TOTAL_NUMBERS_SUMMED];
             }
@@ -51,10 +51,10 @@ public class pictureBlurrer{
         numColumns = fileScanner.nextInt();
         numRows = fileScanner.nextInt();
         maxValue = fileScanner.nextInt();
-        double[][] imageArray = new double[numColumns][numRows];
+        double[][] imageArray = new double[numRows][numColumns];
 
-        for (int i = 0; i < numColumns; i++) {
-            for (int j = 0; j < numRows; j++) {
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numColumns; j++) {
                 imageArray[i][j] = fileScanner.nextInt();
             }
         }
@@ -69,7 +69,7 @@ public class pictureBlurrer{
      */
     public static void runProgram(int iterations) throws IOException {
         File file = Menu.getFileFromMenu();
-        double[][] blurredArray = new double[numColumns][numRows];
+        double[][] blurredArray = new double[numRows][numColumns];
         double[][] imageArray = pgmToArray(file);
 
         //new Frame(imageArray);
@@ -137,6 +137,13 @@ public class pictureBlurrer{
         double numOfnumbersSummed = 9;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
+
+                /*
+                 * Instead of doing a try-catch here because it will step outside of the bounds, have the numbers loop around
+                 * For example, when you're trying to get the sum of the 9x9 on the left most edge (position 0) it would, instead of just not adding to the sum, go to the position on the other side
+                 * In a 100x100 grid, it would wrap from 0 to position 99. Same with the vertical positions.
+                 * 
+                 */
                 try {
                     value += img[col - 1 + i][row - 1 + j];
                 } catch (Exception e) {

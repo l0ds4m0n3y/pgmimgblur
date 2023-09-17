@@ -14,8 +14,8 @@ public class Frame extends JFrame {
 
     Frame(double[][] pixelArray) {
         this.pixelArray = pixelArray;
-        this.panelWidth = pictureBlurrer.getNumRows();
-        this.lenght = pictureBlurrer.getNumColumns();
+        this.panelWidth = pictureBlurrer.getNumColumns();
+        this.lenght = pictureBlurrer.getNumRows();
         Panel panel = new Panel(panelWidth, lenght, pixelArray);
         setName(Double.toString(pixelArray[0][0]));
         add(panel);
@@ -27,7 +27,7 @@ public class Frame extends JFrame {
 
     private class Panel extends JPanel {
         Panel(int width, int length, double[][] pixelArray) {
-            setPreferredSize(new Dimension(PIXEL_SIZE * length, PIXEL_SIZE * width));
+            setPreferredSize(new Dimension(PIXEL_SIZE * width, PIXEL_SIZE * length));
             setVisible(true);
         }
 
