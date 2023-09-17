@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class pictureBlurrer{
-    final static int SUM_TOTAL = 0;
-    final static int TOTAL_NUMBERS_SUMMED = 1;
     static String magicNumber;
     static int numColumns;
     static int numRows;
@@ -39,8 +37,7 @@ public class pictureBlurrer{
     private static void blur(double[][] source, double[][] dest) {
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numColumns; j++) {
-                double[] values = sum3x3(source, i, j);
-                dest[i][j] = values[SUM_TOTAL] / values[TOTAL_NUMBERS_SUMMED];
+                dest[i][j] = sum3x3(source, i, j);
             }
         }
     }
@@ -131,10 +128,8 @@ public class pictureBlurrer{
      * forming. Use constants pictureBlurrer.SUM_TOTAL and pictureBlurrer.TOTAL_NUMBERS_SUMMED for easy distinguishment
      */
     
-    private static double[] sum3x3(double[][] img, int col, int row) {
-        double[] values = { 0, 0 };
-        double value = 0;
-        double numOfnumbersSummed = 9;
+    private static double sum3x3(double[][] img, int row, int col) {
+        double currSum = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
 
@@ -144,15 +139,9 @@ public class pictureBlurrer{
                  * In a 100x100 grid, it would wrap from 0 to position 99. Same with the vertical positions.
                  * 
                  */
-                try {
-                    value += img[col - 1 + i][row - 1 + j];
-                } catch (Exception e) {
-                    numOfnumbersSummed--;
-                }
+                currSum += img[(row - 1 + i + numRows) % numRows][(col - 1 + j + numColumns) % numColumns];
             }
         }
-        values[SUM_TOTAL] = value;
-        values[TOTAL_NUMBERS_SUMMED] = numOfnumbersSummed;
-        return values;
+        return currSum/9;
     }
 }
