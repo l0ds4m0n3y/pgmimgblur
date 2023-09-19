@@ -4,6 +4,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.*;
 
+/**
+ * Creates a gui for simple file upload and simple numeric input for the picture blurring program 
+ */
 public class Menu extends JFrame implements ActionListener {
     private final int WIDTH = 400;
     private final int LENGTH = 200;
@@ -70,11 +73,17 @@ public class Menu extends JFrame implements ActionListener {
         pack();
         setVisible(true);
     }
-
+    /**
+     * returns file uploaded
+     * @return file uploaded
+     */
     public static File getFileFromMenu() {
         return fileToBlur;
     }
-
+    /**
+     * returns int amount of iretations that the blur method will run in the pictureBlurrer class
+     * @return int amount of iterations that the blur method will run in the pictureBlurrer class
+     */
     public static int getNumOfIterations() {
         return numOfIterations;
     }

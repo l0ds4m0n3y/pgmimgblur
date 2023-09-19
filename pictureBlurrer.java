@@ -11,12 +11,12 @@ public class pictureBlurrer{
     static int maxValue;
 
     /** 
+     * makes a new file for the blurred image
      * @param img 2D array of the output image
      * @param imgInfo a single string that contains the magic number, size, and max greyscale value that is generated in runprogram()
      * @param fName name of the originally inputted image
      * @throws IOException
      */
-
     private static void writeImage(double[][] img, String imgInfo, String fName) throws IOException {
         FileWriter writer = new FileWriter(fName + ".pgm");
         writer.write(imgInfo);
@@ -31,6 +31,7 @@ public class pictureBlurrer{
     }
 
     /** 
+     * uses the sum3x3 method to average pixel values in the source 2D array and writes them in the dest 2D array
      * @param source the 2D array that is already in memory that the method will be reading from
      * @param dest  the 2D array of where the output of the method will be entered
      */
@@ -43,8 +44,10 @@ public class pictureBlurrer{
     }
     
     /**
+     * reads a pgm file, adds all the file info to variables and adds all pixel values to a 2D array
      * @param file file to read
      * @return double[][] 2D array of all the pixel values
+     * @throws FileNotFoundException
      */
     public static double[][] pgmToArray(File file) throws FileNotFoundException{
         Scanner fileScanner = new Scanner(file);
@@ -80,12 +83,14 @@ public class pictureBlurrer{
         for (int i = 0; i < iterations; i++) {
             blur(blurredArray, blurredArray);
         }
-        
-        writeImage(blurredArray, imgInfoToString(), getFileName(file, iterations)); //TODO uncomment this
+        if(iterations < 0){
+            writeImage(blurredArray, imgInfoToString(), getFileName(file, iterations)); //TODO comment this to avoid too many files
+        }
         new Frame(blurredArray);
     }
 
     /** 
+     * gets the name of the pgm file and adds the suffix indicating hte number of iterations the blur method was passed through
      * @param file Original file
      * @param iterations How many iterations of the blur method the original file will be passed through
      * @return the name of the final file
@@ -95,22 +100,30 @@ public class pictureBlurrer{
     }
 
     /** 
-     * @return pgm file information
+     * returns pgm file header information
+     * @return pgm file header information
      */
     private static String imgInfoToString(){
         return magicNumber + "\n" + numColumns + " " + numRows + "\n" + maxValue + "\n";     
     }
-
+    /**
+     * returns the number of columns in the 2D array 
+     * @return int number of columns in the 2D array 
+     */
     public static int getNumColumns() {
         return numColumns;
     }
-     
+    /**
+     * returns the number of rows in the 2D array 
+     * @return int number of rows in the 2D array 
+     */
     public static int getNumRows() {
         return numRows;
     }
 
     
     /** 
+     * uses the wrap around method of iterating through an array to sum the pixel values in a 2D array 
      * @param img 2D array of the original pgm file
      * @param row row number of the pixel which the method will anchor from 
      * @param col column number of the pixel which the method will anchor from 
